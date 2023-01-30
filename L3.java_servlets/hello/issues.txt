@@ -1,0 +1,40 @@
+полезно сгенерировать пустой проект с помощью maven:
+
+mvn archetype:generate \
+  -DgroupId=com.mycompany.app \
+  -DartifactId=my-app \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.4 \
+  -DinteractiveMode=false
+
+чтобы иметь возможность посмотреть что будет создано в pom.xml по умолчанию;
+для примера, см.: colored_terminal_generated
+
+----------------------------------------------------------------------------
+
+при сборке проекта servapp где pom.xml был создан InteliJ, так как maven-проект
+создавался из wizard-a я столкнулся с проблемой - при выполнении mvn package выскакивала
+ошибка:
+   Cannot access defaults field of Properties
+
+опять таки выручил всезнающий stackoverflow:
+   https://stackoverflow.com/questions/67168999/maven-error-cannot-access-defaults-field-of-properties
+
+суть ответа - подправить pom.xml:
+
+Change the version of the war plugin in your pom.xml and add maven-compiler-plugin
+according to your jdk version.
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-war-plugin</artifactId>
+    <version>3.3.1</version>
+</plugin>
+<plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.8.1</version>
+</plugin>
+
+и снова такие строки есть в pom.xml проекта, который сгенерировал maven
+поэтому я их скопировал оттуда и всё собралось успешно.
