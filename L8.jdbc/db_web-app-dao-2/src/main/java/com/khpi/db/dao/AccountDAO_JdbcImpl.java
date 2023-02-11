@@ -23,7 +23,7 @@ public class AccountDAO_JdbcImpl implements AccountDAO
     private static final String SQL_SELECT_ALL =
         "SELECT a.*, COUNT(b.account_id) AS cars_owned_count FROM car_portal_app.account a " +
             "LEFT JOIN car_portal_app.car_account_link b ON a.account_id = b.account_id " +
-            "GROUP BY a.account_id " +
+            "GROUP BY a.account_id, a.first_name " +
             "ORDER BY a.first_name";
 
     // language=SQL
@@ -47,7 +47,7 @@ public class AccountDAO_JdbcImpl implements AccountDAO
         "SELECT a.*, COUNT(b.account_id) AS cars_owned_count FROM car_portal_app.account a " +
             "LEFT JOIN car_portal_app.car_account_link b ON a.account_id = b.account_id " +
             "WHERE a.first_name = ?" +
-            "GROUP BY a.account_id " +
+            "GROUP BY a.account_id, a.first_name " +
             "ORDER BY a.first_name ";
 
     // language=SQL
