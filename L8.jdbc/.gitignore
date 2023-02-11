@@ -1,0 +1,12 @@
+/db_min-app/*.iml
+/db_min-app/.idea
+/db_min-app/target
+/db_web-app/*.iml
+/db_web-app/.idea
+/db_web-app/target
+/db_web-app-dao/*.iml
+/db_web-app-dao/.idea
+/db_web-app-dao/target
+/db_web-app-dao-2/*.iml
+/db_web-app-dao-2/.idea
+/db_web-app-dao-2/target
