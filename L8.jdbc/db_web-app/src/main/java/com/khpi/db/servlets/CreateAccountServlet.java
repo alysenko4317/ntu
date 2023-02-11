@@ -42,7 +42,7 @@ public class CreateAccountServlet extends BaseServlet
         {
             if (false)
             {
-                // SQL Invection vulnerability!
+                // SQL Injection vulnerability!
                 //    temp','temp','temp','temp'); DROP TABLE car_portal_app.account; -- 1
 
                 String sqlInsert =

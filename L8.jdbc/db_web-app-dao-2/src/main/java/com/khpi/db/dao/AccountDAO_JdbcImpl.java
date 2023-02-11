@@ -42,6 +42,23 @@ public class AccountDAO_JdbcImpl implements AccountDAO
     private final String SQL_SELECT_ALL_BY_FIRST_NAME =
         "SELECT * FROM car_portal_app.account WHERE first_name = ?";
 
+    // language=SQL
+    private static final String SQL_SELECT_ALL_BY_FIRST_NAME_2 =
+        "SELECT a.*, COUNT(b.account_id) AS cars_owned_count FROM car_portal_app.account a " +
+            "LEFT JOIN car_portal_app.car_account_link b ON a.account_id = b.account_id " +
+            "WHERE a.first_name = ?" +
+            "GROUP BY a.account_id " +
+            "ORDER BY a.first_name ";
+
+    // language=SQL
+    private static final String SQL_SELECT_ALL_BY_FIRST_NAME_WITH_CARS =
+        "SELECT a.*, c.*, m.* FROM car_portal_app.account a " +
+            "LEFT JOIN car_portal_app.car_account_link b ON a.account_id = b.account_id " +
+            "LEFT JOIN car_portal_app.car c ON b.car_id = c.car_id " +
+            "LEFT JOIN car_portal_app.car_model m ON c.car_model_id = m.car_model_id " +
+            "WHERE a.first_name = ?" +
+            "ORDER BY a.first_name";
+
     public AccountDAO_JdbcImpl(DataSource dataSource)
     {
         this(dataSource, false);
@@ -126,6 +143,8 @@ public class AccountDAO_JdbcImpl implements AccountDAO
 
     @Override
     public List<Account> findAllByFirstName(String firstName) {
+        //final String sql = _loadOwnedCars ? SQL_SELECT_ALL_BY_FIRST_NAME_WITH_CARS
+        //                                  : SQL_SELECT_ALL_BY_FIRST_NAME_2;
         return _template.query(SQL_SELECT_ALL_BY_FIRST_NAME, accountRowMapper, firstName);
     }
 
