@@ -1,0 +1,35 @@
+If you have Java 10 this example will not work because Hibernate will not work (its relying on a package removed in Java 10).
+
+
+
+
+This is what fails:
+
+> Task :run FAILED
+Exception in thread "main" java.lang.NoClassDefFoundError: javax/xml/bind/JAXBException
+       at org.hibernate.boot.spi.XmlMappingBinderAccess.<init>(XmlMappingBinderAccess.java:43)
+       at org.hibernate.boot.MetadataSources.<init>(MetadataSources.java:87)
+       at org.hibernate.cfg.Configuration.<init>(Configuration.java:123)
+       at org.hibernate.cfg.Configuration.<init>(Configuration.java:118)
+       at com.cockroachlabs.Sample.<clinit>(Sample.java:16)
+Caused by: java.lang.ClassNotFoundException: javax.xml.bind.JAXBException
+       at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:582)
+       at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:190)
+       at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:499)
+       ... 5 more
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':run'.
+> Process 'command '/Library/Java/JavaVirtualMachines/jdk-10.0.2.jdk/Contents/Home/bin/java'' finished with non-zero exit value 1
+
+
+
+Relevant SO thread:
+https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j
+
+Maybe relevant:
+https://stackoverflow.com/questions/48986999/classnotfoundexception-for-javax-xml-bind-jaxbexception-with-spring-boot-when-sw
+
+
