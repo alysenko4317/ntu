@@ -1,6 +1,5 @@
 package com.khpi.demo2;
 
-import com.khpi.demo2.MessageSender;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

@@ -14,6 +14,8 @@ public class CarModel
     private String model;
     private String make;
 
+    //private Integer myfield;
+
     public CarModel() { }
     public CarModel(final Integer id) {
         this.pk = id;

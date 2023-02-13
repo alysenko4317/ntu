@@ -30,8 +30,7 @@ public class Application
         sessionFactory.close();
     }
 
-    private static void doStuff(Session session)
-    {
+    private static void doStuff(Session session) {
         // TODO: Implement models and this method
     }
 }

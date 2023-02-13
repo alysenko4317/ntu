@@ -30,6 +30,14 @@ public class Car
     @Column(name = "mileage")
     private Integer _mileage;
 
+    // this is just to demonstrate how Hibernate will automatically
+    // add a column to the database; note, that @Column annotation is
+    // not required; this functionality requires the option be set in
+    // configuration: <property name="hbm2ddl.auto">update</property>
+
+    //@Column(name = "my_field")
+    //private Integer myfield;
+
     public Car() { }
     public Car(final Integer id) {
         _pk = id;

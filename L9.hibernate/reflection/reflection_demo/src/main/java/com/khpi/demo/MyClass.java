@@ -1,12 +1,12 @@
 package com.khpi.demo;
 
-public class MyClass {
+public class MyClass
+{
     public int foo;
     public String str;
+    private String hidden;
 
     public String getHidden() {
-        return _hidden;
+        return hidden;
     }
-
-    private String _hidden;
 }

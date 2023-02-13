@@ -9,7 +9,7 @@ public class Main
     {
         System.out.println("hello!");
 
-        // step 1 - определим класс и создадим экхемпляр этого класса
+        // step 1 - определим класс и создадим экземпляр этого класса
         MyClass o = new MyClass();
 
         // step 2 - рассмотрим такие встроенные классы как Class и Field, которые позволяют
@@ -35,7 +35,7 @@ public class Main
         for (Field f : myClass.getDeclaredFields())
             System.out.println(f.getType() + " "+ f.getName());
 
-        Field privateField = myClass.getDeclaredField("_hidden");
+        Field privateField = myClass.getDeclaredField("hidden");
         System.out.println(privateField.getType());
 
         privateField.setAccessible(true);
