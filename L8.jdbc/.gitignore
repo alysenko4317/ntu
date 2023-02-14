@@ -10,3 +10,6 @@
 /db_web-app-dao-2/*.iml
 /db_web-app-dao-2/.idea
 /db_web-app-dao-2/target
+/jdk8-demos/*.iml
+/jdk8-demos/.idea
+/jdk8-demos/out
