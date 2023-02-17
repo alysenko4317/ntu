@@ -15,13 +15,11 @@ public class Main
         DataSource ds = DatasourceFactory.getDatasource("db.properties");
 
         AccountDAO dao = new AccountDAO_JdbcImpl(ds, true);
-        List<Account> accounts = dao.findAllByFirstName("Anton");
-        //List<Account> accounts = dao.fetchAll();
+        //List<Account> accounts = dao.findAllByFirstName("Anton");
+        List<Account> accounts = dao.fetchAll();
 
         for (Account acc: accounts)
         {
-            if (acc == null)  continue;
-
             System.out.println(acc.toString());
 
             final List<Car> cars = acc.getCars();

@@ -10,13 +10,15 @@
     <div class="form-style-2-heading">
         Please Sign Up!
     </div>
-    <form method="post" action="/jpa/users">
+    <form method="post" action="users">
         <label for="firstName">First Name
-            <input class="input-field" type="text" id="firstName" name="firstName">
-        </label>
+            <input class="input-field" type="text" id="firstName" name="firstName"></label>
         <label for="lastName">Last Name
-            <input class="input-field" type="text" id="lastName" name="lastName">
-        </label>
+            <input class="input-field" type="text" id="lastName" name="lastName"></label>
+        <label for="lastName">Login
+            <input class="input-field" type="text" id="login" name="login"></label>
+        <label for="lastName">Password
+            <input class="input-field" type="text" id="password" name="password"></label>
         <input type="submit" value="Add user">
     </form>
 </div>

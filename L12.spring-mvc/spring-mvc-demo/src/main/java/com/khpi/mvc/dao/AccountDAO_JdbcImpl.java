@@ -6,6 +6,7 @@ import com.khpi.mvc.models.CarModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -19,6 +20,8 @@ import java.util.*;
 public class AccountDAO_JdbcImpl implements AccountDAO
 {
     private JdbcTemplate _template;
+    private NamedParameterJdbcTemplate _templateNP;   // другой вариант для общего развития
+
     private boolean _loadOwnedCars;
     private Map<Integer, Account> _accounts = new HashMap<>();
 
@@ -72,6 +75,8 @@ public class AccountDAO_JdbcImpl implements AccountDAO
     {
         _template = new JdbcTemplate(dataSource);
         _loadOwnedCars = loadOwnedCars;
+
+        _templateNP = new NamedParameterJdbcTemplate(dataSource);
     }
 
     private RowMapper<Account> accountRowMapper = (ResultSet rs, int i) ->
@@ -155,11 +160,28 @@ public class AccountDAO_JdbcImpl implements AccountDAO
 
         return _template.query(sql/*SQL_SELECT_ALL_BY_FIRST_NAME*/, accountRowMapper, firstName);
     }
-
-    @Override
+/*
+    @Override  // variant 1
     public Optional<Account> find(Integer id)
     {
         _template.query(SQL_SELECT_BY_ID, accountRowMapper, id);
+
+        if (_accounts.containsKey(id)) {
+            return Optional.of(_accounts.get(id));
+        }
+
+        return Optional.empty();
+    }
+*/
+    @Override
+    public Optional<Account> find(Integer id)
+    {
+        final String sql = "SELECT * FROM car_portal_app.account WHERE account_id = :id";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+
+        _templateNP.query(sql, params, accountRowMapper);
 
         if (_accounts.containsKey(id)) {
             return Optional.of(_accounts.get(id));
@@ -190,7 +212,30 @@ public class AccountDAO_JdbcImpl implements AccountDAO
             throw new IllegalStateException(e);
         }
     }
+    /*
+        @Override  // variant 2
+        public void save(Account model)
+        {
+            try
+            {
+                Map<String, Object> params = new HashMap<>();
 
+                final String sql =
+                    "INSERT INTO " + "car_portal_app.account(first_name, last_name, email, password) " +
+                        "VALUES (:firstName, :lastName, :email, :password)");
+
+                params.put("firstName", model.getFirstName());
+                params.put("lastName", model.getLastName());
+                params.put("email", model.getEmail());
+                params.put("password", model.getPasswordHash());
+
+                _templateNP.update(sql, params);
+            }
+            catch (SQLException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+    */
     @Override
     public void update(Account model) {
     }

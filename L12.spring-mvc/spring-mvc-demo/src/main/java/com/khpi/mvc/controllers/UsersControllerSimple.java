@@ -30,12 +30,8 @@ public class UsersControllerSimple implements Controller
         if (httpServletRequest.getMethod().equals("GET"))
         {
             List<Account> accounts = _accountsDAO.fetchAll();
-            for(Account acc: accounts)
-                System.out.println(acc);
-
-            //List<Account> a = new ArrayList<>(accounts);
-
-            //accounts.add(new Account(1,"a","b","c","p", null));
+            //for(Account acc: accounts)
+            //    System.out.println(acc);
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("users");
             modelAndView.addObject("usersFromServer", accounts);

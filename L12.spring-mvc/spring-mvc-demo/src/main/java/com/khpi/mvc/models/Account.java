@@ -1,5 +1,6 @@
 package com.khpi.mvc.models;
 
+import com.khpi.mvc.forms.UserForm;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,15 @@ public class Account
     private String email;
     private String passwordHash;
     private List<Car> cars;
+
+    public static Account from(UserForm form) {
+        return Account.builder()
+            .firstName(form.getFirstName())
+            .lastName(form.getLastName())
+            .email(form.getLogin())
+            .passwordHash(form.getPassword())  // FIXME:  should not store passwords as plain text
+            .build();
+    }
 
   /*  @Override
     public String toString() {
