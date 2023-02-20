@@ -1,11 +1,13 @@
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class TestJPA {
+// https://javarush.com/groups/posts/2259-jpa--znakomstvo-s-tekhnologiey
+
+public class TestJPA_Starter {
 
     // Согласно главе "7.2.2 Obtaining an Application-managed Entity Manager" спецификации JPA
     // мы должны использовать EntityManagerFactory. Поэтому, вооружимся спецификацией JPA и возьмём
