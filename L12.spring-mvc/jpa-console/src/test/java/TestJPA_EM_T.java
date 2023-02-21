@@ -1,12 +1,19 @@
 
 import com.khpi.db.models.Account;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -131,5 +138,42 @@ public class TestJPA_EM_T {
 
         // 6. И можно сделать Removed. Интересно, что acc всё равно detached
         _em.remove(managed);
+    }
+
+    @Test
+    public void shouldPerformQuery()
+    {
+        Account acc = new Account().builder()
+            .firstName("Anton")
+            .lastName("Lysenko")
+            .email("s@s.s")
+            .passwordHash("123").build();
+
+        _em.persist(acc);
+
+        Query query = _em.createQuery(
+            "SELECT c from Account c WHERE c.firstName = 'Anton'");
+        assertNotNull(query.getSingleResult());
+    }
+
+    @Test
+    public void shouldFindWithCriteriaAPI() {
+        Account acc = new Account().builder()
+            .firstName("Anton")
+            .lastName("Lysenko")
+            .email("s@s.s")
+            .passwordHash("123").build();
+
+        _em.persist(acc);
+
+        // Использование CriteriaAPI для построения запроса к СУБД
+        // Данный пример равносилен выполнению запроса "SELECT c FROM Category c".
+
+        CriteriaBuilder cb = _em.getCriteriaBuilder();
+        CriteriaQuery<Account> query = cb.createQuery(Account.class);
+        Root<Account> c = query.from(Account.class);
+        query.select(c);
+        List<Account> resultList = _em.createQuery(query).getResultList();
+        Assert.assertEquals(1, resultList.size());
     }
 }

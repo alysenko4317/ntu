@@ -40,8 +40,11 @@ public class TestJPA_EM
 
     @Test
     public void shouldPersistCategory() {
-        Account acc = new Account();
-        acc.builder().firstName("Anton").lastName("Lysenko").email("s@s.s").passwordHash("123").build();
+        Account acc = new Account().builder()
+            .firstName("Anton")
+            .lastName("Lysenko")
+            .email("s@s.s")
+            .passwordHash("123").build();
         _em.persist(acc);
 
         // При выполнении теста мы видим в том числе то, какие запросы отправляются в базу
