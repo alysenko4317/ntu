@@ -1,5 +1,6 @@
 package com.khpi.service.security.config;
 
+import ch.qos.logback.core.encoder.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -51,13 +52,26 @@ public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
             .formLogin()
                 .usernameParameter("login")  // by default spring uses "username", but we named it "login"
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/users", true)
                 .failureUrl("/login?error=true")
                 .permitAll(); // failureUrl такой вариант работает, а с failureHandler = нет
 
         return http.build();
     }
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth)
+        throws Exception
+    {
+        auth
+            .inMemoryAuthentication()
+            .withUser("user1")
+            .password(passwordEncoder.encode("user1Pass"))
+            .authorities("ROLE_USER");
+    }
+
+
+    /*
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http)
         throws Exception
@@ -69,5 +83,5 @@ public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
                 .passwordEncoder(passwordEncoder)
                 .and()
                 .build();
-    }
+    }*/
 }
