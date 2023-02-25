@@ -1,6 +1,7 @@
 package com.khpi.service.security.config;
 
 import ch.qos.logback.core.encoder.Encoder;
+import com.khpi.service.models.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,19 +18,18 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import javax.sql.DataSource;
+
 @Configuration
 @ComponentScan("com.khpi")
 @EnableWebSecurity
-public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
+public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
 {
-    //@Autowired
     final private UserDetailsService userDetailsService;
-
-    //@Autowired
     final private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfiguration1(UserDetailsService uds, PasswordEncoder pe) {
+    public SecurityConfiguration(UserDetailsService uds, PasswordEncoder pe) {
         userDetailsService = uds;
         passwordEncoder = pe;
     }
@@ -39,6 +39,7 @@ public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
     {
         http
             .csrf().disable()
+
             .authorizeHttpRequests()
                 .requestMatchers("/users**").authenticated()
                 // css-ки тоже доступны всем для подключения к html-страничкам
@@ -48,6 +49,7 @@ public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
                 // корень разрешаем для всех, если пользователь не залогинен, редирект на /login
                 // выполнится в контроллере ProfileController (он обрабатывает запрос к корневому URL)
                 .requestMatchers("/").permitAll()
+
             .and()
             .formLogin()
                 .usernameParameter("login")  // by default spring uses "username", but we named it "login"
@@ -58,7 +60,7 @@ public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
 
         return http.build();
     }
-
+/*
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
         throws Exception
@@ -69,7 +71,27 @@ public class SecurityConfiguration1 //extends WebSecurityConfigurerAdapter
             .password(passwordEncoder.encode("user1Pass"))
             .authorities("ROLE_USER");
     }
+*/
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource)
+        throws Exception
+    {
+        auth.jdbcAuthentication()
+            .dataSource(dataSource)
+            .withDefaultSchema()
+            .usersByUsernameQuery(
+                "select email, password, 'true' from account where email=?")
+            .authoritiesByUsernameQuery(
+                "select email, role from account where email=?");
+
+         /*   .withUser(Account.withUsername("user")
+                             .password("password")
+                             .roles("USER"))
+            .withUser(Account.withUsername("admin")
+                             .password("password")
+                             .roles("ADMIN"));*/
+    }
 
     /*
     @Bean

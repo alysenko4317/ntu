@@ -33,7 +33,9 @@ public class Application
     }
 
     @Bean
-    public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {
+    public FreeMarkerConfigurer freemarkerConfig()
+        throws IOException, TemplateException
+    {
         FreeMarkerConfigurationFactory factory = new FreeMarkerConfigurationFactory();
         factory.setTemplateLoaderPaths("classpath:templates", "src/main/resource/templates");
         factory.setDefaultEncoding("UTF-8");
@@ -44,6 +46,8 @@ public class Application
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // можно использовать NoOpPasswordEncoder, тогда пароль шифроваться не будет
+        // для девелопмента или учебных целей может быть полезно
         return new BCryptPasswordEncoder();
     }
 

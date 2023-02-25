@@ -21,6 +21,7 @@ public class ProfileController
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
         UserDto user = from(details.getUser());
         model.addAttribute("user", user);
+
         return "profile";
     }
 }

@@ -1,17 +1,16 @@
 package com.khpi.service.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
 
-//import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class LoginController {
+public class LoginController
+{
     @GetMapping("/login")
     public String getLoginPage(Authentication authentication,
                                ModelMap model,
