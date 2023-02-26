@@ -1,6 +1,7 @@
 package com.khpi.service.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -20,11 +25,14 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
 {
     final private UserDetailsService userDetailsService;
     final private PasswordEncoder passwordEncoder;
+    final private DataSource dataSource;
 
     @Autowired
-    public SecurityConfiguration(UserDetailsService uds, PasswordEncoder pe) {
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")  // IntelliJ fails to find DataSource bean
+    public SecurityConfiguration(UserDetailsService uds, PasswordEncoder pe, DataSource ds) {
         userDetailsService = uds;
         passwordEncoder = pe;
+        dataSource = ds;
     }
 
     @Bean
@@ -34,7 +42,7 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
             .csrf().disable()
 
             .authorizeHttpRequests()
-                .requestMatchers("/users**").authenticated()
+                .requestMatchers("/users**").hasAuthority("ADMIN") //authenticated()
                 // css-ки тоже доступны всем для подключения к html-страничкам
                 .requestMatchers("/css/**").permitAll()
                 // страница регистрации - доступна всем
@@ -49,9 +57,20 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
                 .loginPage("/login")
                 .defaultSuccessUrl("/users", true)
                 .failureUrl("/login?error=true")
-                .permitAll(); // failureUrl такой вариант работает, а с failureHandler = нет
+                .permitAll() // failureUrl такой вариант работает, а с failureHandler = нет
+            .and()
+            .rememberMe()
+                .rememberMeParameter("remember-me")
+                .tokenRepository(tokenRepository());
 
         return http.build();
+    }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 
     @Bean
