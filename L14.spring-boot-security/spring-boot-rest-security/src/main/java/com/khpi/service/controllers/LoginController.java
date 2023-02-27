@@ -3,10 +3,7 @@ package com.khpi.service.controllers;
 import com.khpi.service.transfer.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.khpi.service.forms.LoginForm;
 import com.khpi.service.services.LoginService;
 import com.khpi.service.transfer.TokenDto;
@@ -15,7 +12,7 @@ import java.util.List;
 
 import static com.khpi.service.transfer.UserDto.from;
 
-
+@CrossOrigin
 @RestController
 public class LoginController
 {

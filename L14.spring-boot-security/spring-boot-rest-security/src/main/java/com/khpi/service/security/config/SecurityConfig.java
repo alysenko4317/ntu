@@ -66,7 +66,8 @@ public class SecurityConfig
                 .requestMatchers("/login/**").permitAll()
 
             .and()
-               .csrf().disable();
+               .csrf().disable()
+               .cors().disable();
              //  .anonymous().disable();
                //.formLogin().disable()
                //.httpBasic().disable();
