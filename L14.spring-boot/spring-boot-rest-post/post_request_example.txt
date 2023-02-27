@@ -1,0 +1,14 @@
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "firstName":"sdss",
+  "lastName":"sdss",
+  "email":"sdss",
+  "passwordHash":"$2a$10$qzpN1iFY1S27nWWpsuIHN.wnSGDMjIg4P/mEjGDXY3HB6cqdnwZlm",
+  "role":"ADMIN",
+  "state":"ACTIVE",
+  "cars":[]
+}
+
+### MainMenu -> Tools -> HTTP Client
