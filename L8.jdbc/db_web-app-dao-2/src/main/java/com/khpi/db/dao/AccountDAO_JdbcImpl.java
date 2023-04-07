@@ -143,9 +143,9 @@ public class AccountDAO_JdbcImpl implements AccountDAO
 
     @Override
     public List<Account> findAllByFirstName(String firstName) {
-        //final String sql = _loadOwnedCars ? SQL_SELECT_ALL_BY_FIRST_NAME_WITH_CARS
-        //                                  : SQL_SELECT_ALL_BY_FIRST_NAME_2;
-        return _template.query(SQL_SELECT_ALL_BY_FIRST_NAME, accountRowMapper, firstName);
+        final String sql = _loadOwnedCars ? SQL_SELECT_ALL_BY_FIRST_NAME_WITH_CARS
+                                          : SQL_SELECT_ALL_BY_FIRST_NAME_2;
+        return _template.query(sql/*SQL_SELECT_ALL_BY_FIRST_NAME*/, accountRowMapper, firstName);
     }
 
     @Override

@@ -26,6 +26,8 @@ public class InMemoryStorage
         return storage;
     }
 
+    // --------------------------------------------------------
+
     // приватный констуктор, выполняющий инициализацию списка
     private InMemoryStorage()
     {

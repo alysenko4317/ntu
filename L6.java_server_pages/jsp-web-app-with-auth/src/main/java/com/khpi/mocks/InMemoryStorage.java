@@ -27,6 +27,8 @@ public class InMemoryStorage
     }
 
     // приватный констуктор, выполняющий инициализацию списка
+    // приватный, чтобы запретить создание объекта вне этого класса, так как клиенты
+    // долюны использовать метод getInstance()
     private InMemoryStorage()
     {
         this.users = new ArrayList<>();

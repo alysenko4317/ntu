@@ -17,7 +17,7 @@ public class Program
         Statement statement = conn.createStatement();
 
         ResultSet rs = statement.executeQuery("SELECT * FROM car_portal_app.account");
-        while(rs.next())
+        while (rs.next())
         {
             System.out.println(
                 rs.getString("first_name") + " "

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * 14.03.2018
  * AuthFilter
  * Класс-фильтр, выполняет обработку запроса до того, как он будет обработан сервлетами.
  */
@@ -35,7 +34,7 @@ public class AuthFilter implements Filter
         // с названием JSESSIONID
         HttpSession session = request.getSession(false);
 
-        // если сессия не была, или у сессии отсутствует атрибут user,
+        // если сессия не создана, или у сессии отсутствует атрибут user,
         // перенаправляем пользователя на страницу с логином
         if (session == null || session.getAttribute("user") == null)
         {

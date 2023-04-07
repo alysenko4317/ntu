@@ -27,8 +27,10 @@ public class UsersRepositoryInMemoryImpl implements UsersRepository
     {
         for (User user : InMemoryStorage.getInstance().users())
         {
-            if (user.getName().equals(name) && user.getPassword().equals(password))
+            if (user.getName().equals(name)
+                   && user.getPassword().equals(password)) {
                 return true;
+            }
         }
 
         return false;
