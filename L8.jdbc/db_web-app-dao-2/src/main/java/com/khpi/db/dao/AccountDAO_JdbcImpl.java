@@ -97,7 +97,7 @@ public class AccountDAO_JdbcImpl implements AccountDAO
         //         - объект Account будет создаваться с параметром cars=null, если у пользователя
         //           не имеется машин вообще;
         //
-        // альтернативный вариант реализации - с помощью resultSetExtractor...
+        // альтернативный вариант реализации - с помощью resultSetExtractor... почитать самостоятельно
 
         Integer id = rs.getInt("account_id");
         boolean exists = _accounts.containsKey(id);

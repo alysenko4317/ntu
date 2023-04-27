@@ -28,6 +28,8 @@ public class BaseServlet extends HttpServlet
             String dbPassword = properties.getProperty("db.password");
             String driverClassName = properties.getProperty("db.driverClassName");
 
+            // DriverManagerDataSource - объект, который содержит в себе всю информацию о подключении
+
             _ds = new DriverManagerDataSource();  // spring-jdbc
             _ds.setUsername(dbUsername);
             _ds.setPassword(dbPassword);

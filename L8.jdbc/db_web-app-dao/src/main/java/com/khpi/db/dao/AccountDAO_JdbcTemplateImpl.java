@@ -34,6 +34,9 @@ public class AccountDAO_JdbcTemplateImpl implements AccountDAO
         _template = new JdbcTemplate(dataSource);
     }
 
+    // відображує рядок з ResultSet-у у об'єкт
+    // далі ми можемо його використовувати для виконання запитів
+
     private RowMapper<Account> accountRowMapper = (ResultSet rs, int i) ->
     {
        Integer id = rs.getInt("account_id");
