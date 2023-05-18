@@ -65,6 +65,9 @@ public class AccountDAO_JdbcImpl implements AccountDAO
             "WHERE a.first_name = ?" +
             "ORDER BY a.first_name";
 
+    /* dependency injection using spring */
+    /* але щоб це працювало, потрібно щоб сам клас також був біном, тому над класом
+       ми застосували анотацію @Component */
     @Autowired
     public AccountDAO_JdbcImpl(DataSource dataSource)
     {

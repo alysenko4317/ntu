@@ -22,7 +22,7 @@ public class Main
         // step3 - посмотрим какие поля имеются у обьекта o
         Field[] fields = myClass.getFields();
         for (Field f : fields)
-            System.out.println(f.getType() + " "+ f.getName());
+            System.out.println(f.getType() + " " + f.getName());
 
         // step4: используем рефлексию чтобы изменять значение поля в обьекте
         System.out.println(o.foo);
@@ -33,7 +33,7 @@ public class Main
 
         // step5: какова ситуация с закрытыми полями ?
         for (Field f : myClass.getDeclaredFields())
-            System.out.println(f.getType() + " "+ f.getName());
+            System.out.println(f.getType() + " " + f.getName());
 
         Field privateField = myClass.getDeclaredField("hidden");
         System.out.println(privateField.getType());

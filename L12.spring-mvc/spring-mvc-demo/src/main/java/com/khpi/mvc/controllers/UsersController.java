@@ -56,7 +56,7 @@ public class UsersController
         System.out.println(userForm);
         Account newUser = Account.from(userForm);
         System.out.println(newUser.toString());
-        accountsDAO.save(newUser);
+        //accountsDAO.save(newUser);  // save new user in database
         return "redirect:/users";
     }
 }

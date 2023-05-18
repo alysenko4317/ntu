@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+// по факту UsersControllerSimple
+//    - це сервлет, але трошки особливий у тому плані що він інтегрується зі Spring
+
 public class UsersControllerSimple implements Controller
 {
     @Autowired
@@ -27,13 +30,14 @@ public class UsersControllerSimple implements Controller
     public ModelAndView handleRequest(HttpServletRequest httpServletRequest,
                                       HttpServletResponse httpServletResponse) throws Exception
     {
+        // відповідаємо тільки на запити типу GET
         if (httpServletRequest.getMethod().equals("GET"))
         {
             List<Account> accounts = _accountsDAO.fetchAll();
             //for(Account acc: accounts)
             //    System.out.println(acc);
             ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("users");
+            modelAndView.setViewName("users");  // users.jps
             modelAndView.addObject("usersFromServer", accounts);
             return modelAndView;
         }

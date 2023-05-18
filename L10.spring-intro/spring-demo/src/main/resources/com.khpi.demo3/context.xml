@@ -15,7 +15,7 @@
     <bean id="message" class="com.khpi.demo3.TextMessage">
         <constructor-arg name="msg" value="Hello" /></bean>
 
-    <bean id="MessageSender" class="com.khpi.demo3.ConsoleMessageSenderImpl">
+    <bean id="MessageSender" class="com.khpi.demo3.SmsMessageSenderImpl">
         <constructor-arg name="msg" ref="message" /></bean>
 
 </beans>

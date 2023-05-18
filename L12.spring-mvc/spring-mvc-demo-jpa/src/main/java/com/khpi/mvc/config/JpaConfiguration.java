@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -24,18 +25,20 @@ public class JpaConfiguration
 {
     @Autowired
     private DataSource dataSource;
+    EntityManager em;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory()
     {
+        // такой EntityManager об'єднає Spring та Hibernate
         LocalContainerEntityManagerFactoryBean emf =
              new LocalContainerEntityManagerFactoryBean();
 
-        emf.setDataSource(dataSource);
-        emf.setPackagesToScan("com.khpi.mvc.models");
+        emf.setDataSource(dataSource);  // 1. datasource
+        emf.setPackagesToScan("com.khpi.mvc.models");  // 2. where models located
 
-        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.setDatabase(Database.POSTGRESQL);
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();  // 3. a layer between jpa and hibernate
+        adapter.setDatabase(Database.POSTGRESQL);  // DBMS type
 
         emf.setJpaVendorAdapter(adapter);
         emf.setJpaProperties(jpaProperties());

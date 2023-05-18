@@ -10,8 +10,13 @@
                            http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+
+    <!-- це потрібно для того щоб опрацьовувались анотаціі Spring у коді для визначення бинов -->
     <context:component-scan base-package="com.khpi.mvc"/>
 
+    <!-- тут далі реєструємо біни -->
+
+    <!-- зручо щоб налаштування підключення до БД було у конфіг файлі який не треба компілювати -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="username" value="postgres"/>
         <property name="password" value="1234"/>
@@ -19,15 +24,22 @@
         <property name="url" value="jdbc:postgresql://localhost:5433/car_portal"/>
     </bean>
 
+    <!-- по факту UsersControllerSimple - це сервлет, але трошки особливий у тому плані
+         що він інтегрується зі Spring -->
+    <!-- id біна визначає url на який буде реагувати цей контролер -->
     <bean id="/simple/users"
           class="com.khpi.mvc.controllers.UsersControllerSimple"/>
 
+    <!-- налаштування viewResolver-a -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- це для того щоб працювали анотаціі MVC -->
     <mvc:annotation-driven />
+
+    <!-- налаштування для статичних ресурсів -->
     <mvc:resources mapping="/css/styles.css" location="/css"/>
 </beans>

@@ -36,6 +36,8 @@ public class Main
         //         но выполняется несколько сложнее
         //-----------------------------------------------------
 
+        System.out.println("-----");
+
         Class types[] = new Class[fields.length];
         for (int i = 0; i < types.length; i++) {
             types[i] = fields[i].getType();
@@ -43,8 +45,10 @@ public class Main
 
         Constructor constructor = aClass.getDeclaredConstructor(types);
         for (Class parameterType : constructor.getParameterTypes()) {
-            System.out.print(parameterType.getName() + " ");
+            System.out.print("*" + parameterType.getName() + " ");
         }
+
+        System.out.println("\n---");
 
         Integer intValue = 0;
         String stingValue = "";

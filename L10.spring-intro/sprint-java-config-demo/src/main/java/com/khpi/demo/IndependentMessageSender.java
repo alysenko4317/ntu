@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Component
 public class IndependentMessageSender
 {
-    @Autowired
     private IMessageSender _messageSender;
+
+    @Autowired
+    IndependentMessageSender(IMessageSender ms) {
+        _messageSender = ms;
+    }
 
     public void send() {
         _messageSender.send();

@@ -14,6 +14,9 @@ public class CarModel
     private String model;
     private String make;
 
+    @Column(name = "car_model_age")
+    private Integer age;
+
     //private Integer myfield;
 
     public CarModel() { }
@@ -29,6 +32,13 @@ public class CarModel
     }
     public void setMake(String make) {
         this.make = make;
+    }
+
+    public Integer getAge() {
+        return this.age;
+    }
+    public void setAge() {
+
     }
 
     public Integer getId() {

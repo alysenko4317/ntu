@@ -33,6 +33,7 @@
 		<!-- MAPPINGS -->
 		<mapping class="com.khpi.models.Car" />
 		<mapping class="com.khpi.models.CarModel" />
+		<mapping class="com.khpi.models.Foo" />
 		<mapping resource="account.hbm.xml" />
 
 	</session-factory>

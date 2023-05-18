@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-// по сути - это замена конфигурационному xml файлу для spring framework
+// по сути - это замена конфигурационному context.xml файлу для spring framework
 
 @Configuration
 @ComponentScan(basePackages = "com.khpi.demo")

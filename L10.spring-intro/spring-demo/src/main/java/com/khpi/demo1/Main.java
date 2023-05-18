@@ -7,6 +7,10 @@ public class Main
 {
     public static void main(String[] args)
     {
+        // DI container
+        //   - ApplicationContext - интерфйс DI-контейнера
+        //   - одна из реализаций ClassPathXmlApplicationContext этого интерфейса
+
         ApplicationContext ctx =
             new ClassPathXmlApplicationContext("com.khpi.demo1/context.xml");
 
