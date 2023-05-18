@@ -14,11 +14,14 @@ public class ProfileController
     @GetMapping("/")
     public String getProfilePage(ModelMap model, Authentication authentication)
     {
+        // зберігає дані про вже авторизованого користувача
         if (authentication == null) {
             return "redirect:/login";
         }
 
         UserDetailsImpl details = (UserDetailsImpl) authentication.getPrincipal();
+
+        // using data transfer object (DTO) to pass only those data which are really required in view model
         UserDto user = from(details.getUser());
         model.addAttribute("user", user);
 

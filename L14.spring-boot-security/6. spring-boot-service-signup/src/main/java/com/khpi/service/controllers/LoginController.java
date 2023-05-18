@@ -16,6 +16,7 @@ public class LoginController
                                ModelMap model,
                                HttpServletRequest request)
     {
+        // зберігає дані про вже авторизованого користувача
         if (authentication != null) {
             return "redirect:/";
         }

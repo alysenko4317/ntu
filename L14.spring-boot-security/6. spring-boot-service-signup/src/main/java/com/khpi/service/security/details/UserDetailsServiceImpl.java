@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+// задача цього компоненту - завантажити дані про користувача по вказаному логіну та віддати
+// його Spring-у
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService
 {
@@ -29,5 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService
        // return new
        //     UserDetailsImpl(usersRepository.findOneByEmail(login)
        //        .orElseThrow(IllegalArgumentException::new));
+        // orElseThrow - метод в Optional
     }
 }

@@ -61,32 +61,11 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
         return
             http
                 .getSharedObject(AuthenticationManagerBuilder.class)
+                // встановлюємо який сервіс повинен використовувати Spring для завантаження даних про користувача
                 .userDetailsService(userDetailsService)
+                // встановлюємо password encoder повинен використовувати Spring для роботи з паролями
                 .passwordEncoder(passwordEncoder)
                 .and()
                 .build();
     }
-
-    /*
-    // JDBC auth: not finished
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource)
-        throws Exception
-    {
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
-            .withDefaultSchema()
-            .usersByUsernameQuery(
-                "select email, password, 'true' from account where email=?")
-            .authoritiesByUsernameQuery(
-                "select email, role from account where email=?");
-*/
-         /*   .withUser(Account.withUsername("user")
-                             .password("password")
-                             .roles("USER"))
-            .withUser(Account.withUsername("admin")
-                             .password("password")
-                             .roles("ADMIN"));
-    }
-*/
 }

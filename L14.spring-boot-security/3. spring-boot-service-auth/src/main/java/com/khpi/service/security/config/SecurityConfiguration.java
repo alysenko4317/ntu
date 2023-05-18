@@ -41,8 +41,8 @@ public class SecurityConfiguration
 
             .and()
             .formLogin()
-                .loginPage("/login")
-                .usernameParameter("login")
+                .loginPage("/login")  // customizing login page
+                .usernameParameter("login")  // the input for login has non-default name
                 .defaultSuccessUrl("/users", true)
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler() {
                     @Override

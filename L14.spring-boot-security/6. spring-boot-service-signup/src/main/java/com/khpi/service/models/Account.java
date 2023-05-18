@@ -36,6 +36,7 @@ public class Account
     @Column(name="password")
     private String passwordHash;
 
+    // в БД буде зберігатись як varchar
     @Enumerated(value=EnumType.STRING)
     private Role role;
 
