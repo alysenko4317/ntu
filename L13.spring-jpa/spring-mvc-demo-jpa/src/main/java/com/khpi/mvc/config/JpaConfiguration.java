@@ -25,7 +25,7 @@ public class JpaConfiguration
 {
     @Autowired
     private DataSource dataSource;
-    EntityManager em;
+    //EntityManager em;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory()

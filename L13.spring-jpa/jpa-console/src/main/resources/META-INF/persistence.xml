@@ -5,6 +5,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
              http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="CarPortal">
+        <!--важен порядок элементов. Поэтому, provider должен быть указан до перечисления классов. -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.khpi.db.models.Account</class>
         <class>com.khpi.db.models.Car</class>
