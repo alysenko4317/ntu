@@ -7,7 +7,9 @@ import com.khpi.service.repositories.UsersRepository;
 import java.util.List;
 import java.util.Optional;
 
-
+// використовується спеціальна анотація, яка схожа зі звичайним @Controller, але надає
+//   додаткові плюшки, наприклад можна відповідати безпосередньо даними, і вони будуть
+//   автоматично сконвертовані у json
 @RestController
 public class UsersController
 {

@@ -27,6 +27,8 @@ public class SecurityConfiguration
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
         http
+            // когда страница отдаётся, сервер на неё кладёт специальный токен ля того чтобы
+            // потом при обработке формы можно было проверить что форму не подменили
             .csrf().disable()
 
             .authorizeHttpRequests()

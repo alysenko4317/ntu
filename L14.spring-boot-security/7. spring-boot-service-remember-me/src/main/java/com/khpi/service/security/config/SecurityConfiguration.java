@@ -59,8 +59,11 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
                 .failureUrl("/login?error=true")
                 .permitAll() // failureUrl такой вариант работает, а с failureHandler = нет
             .and()
+            // як зробити так, щоб не потрыбно було логынитись повторно при закритті браузеру
             .rememberMe()
+                // це назва параметру на формі, який відповідає за цей функціонал
                 .rememberMeParameter("remember-me")
+                // репозиторій де будуть зберігатися токени
                 .tokenRepository(tokenRepository());
 
         return http.build();
@@ -69,6 +72,8 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
     @Bean
     public PersistentTokenRepository tokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        // dataSource вказує БД, з якою треба працювати
+        // також дивись schema.sql
         tokenRepository.setDataSource(dataSource);
         return tokenRepository;
     }

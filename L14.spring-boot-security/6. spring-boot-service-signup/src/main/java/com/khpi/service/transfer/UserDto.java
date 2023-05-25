@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-// view model
+// за своєю суттю - це view model (утримує обмежені дані, тільки ті які потрібні на формі)
 
 @Data
 @AllArgsConstructor
@@ -14,6 +14,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
 
+    // фабричний метод - створює цей ДТО з моделі користувача
     public static UserDto from(Account user) {
         return UserDto.builder()
                 .firstName(user.getFirstName())
