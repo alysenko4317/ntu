@@ -26,15 +26,10 @@ public class SecurityConfig
     @Autowired
     private TokenAuthenticationProvider authProvider;
 
- //   @Autowired
- //   private TokenAuthFilter tokenAuthFilter;
-
-   // @Autowired
-    //private TokenAuthFilter2 tokenAuthFilter2;
-
-
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authManager(HttpSecurity http)
+        throws Exception
+    {
         AuthenticationManagerBuilder authenticationManagerBuilder =
             http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(authProvider);
@@ -45,12 +40,8 @@ public class SecurityConfig
     public SecurityFilterChain filterChain(HttpSecurity http, TokenAuthFilter tokenAuthFilter)
         throws Exception
     {
-        // Enable CORS and disable CSRF
-     //   http = http.cors().and().csrf().disable();
-
-        // Set session management to stateless
         http = http
-            .sessionManagement()
+            .sessionManagement()   // set session management to stateless
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and();
 
@@ -58,19 +49,14 @@ public class SecurityConfig
             .authenticationProvider(authProvider)
 
             .addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class)
-           // .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
-
 
             .authorizeHttpRequests()
                 .requestMatchers("/users/**").authenticated()
                 .requestMatchers("/login/**").permitAll()
 
-            .and()
+            .and()   // disable CORS and disable CSRF
                .csrf().disable()
                .cors().disable();
-             //  .anonymous().disable();
-               //.formLogin().disable()
-               //.httpBasic().disable();
 
         return http.build();
     }

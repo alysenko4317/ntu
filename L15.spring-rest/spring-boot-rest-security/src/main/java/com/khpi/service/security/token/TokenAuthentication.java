@@ -6,12 +6,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
-
+// за своею суттю - це адаптер для того щоб наш токен став зрозумілим для Spring
 public class TokenAuthentication implements Authentication
 {
     private String token;
     private boolean isAuthenticated;
-    private UserDetails userDetails;
+    private UserDetails userDetails;  // також зберіаємо тут інформацію про користувача
 
     public TokenAuthentication(String token) {
         this.token = token;

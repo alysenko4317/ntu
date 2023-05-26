@@ -31,17 +31,24 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication)
         throws AuthenticationException
     {
+        // сюди може прийти тільки TokenAuthentication (в нашому конкретному випадку)
+        // тому робимо просто каст до нашого типу
         TokenAuthentication tokenAuthentication = (TokenAuthentication) authentication;
 
+        // знаходимо тонен у БД
         Optional<Token> tokenCandidate = tokensRepository.findOneByValue(tokenAuthentication.getName());
 
         if (tokenCandidate.isPresent())
         {
+            // згідно токену знаходимо користувача
             UserDetails userDetails =
                 userDetailsService.loadUserByUsername(
                     tokenCandidate.get().getAccount().getEmail());
+
+            // встановлюемо користувача для Spring та флаг того що авторизація пройдена
             tokenAuthentication.setUserDetails(userDetails);
             tokenAuthentication.setAuthenticated(true);
+
             return tokenAuthentication;
         }
         else
@@ -50,6 +57,8 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
+        // тут вказується що наш auth-provider вміє працювати тільки з
+        // TokenAuthentication типом об'єктів авторизаціі
         return TokenAuthentication.class.equals(authentication);
     }
 }

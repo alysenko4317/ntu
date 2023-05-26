@@ -37,11 +37,15 @@ public class TokenAuthFilter  extends OncePerRequestFilter
     {
         String token = request.getParameter("token");
 
+        // ми у фільтрі створюємо об'єкт аутентифікаціі, з який надалі буде працювати Spring
         TokenAuthentication tokenAuthentication = new TokenAuthentication(token);
         if (token == null) {
             tokenAuthentication.setAuthenticated(false);
         }
         else {
+            // тут ми передаємо створений об'єкт аутентифікаціі Spring-y
+            // але для того щоб Spring зміг працювати за нашим об'єктом
+            // аутентифікаціі ще треба визначити TokenAuthenticationProvider
             SecurityContextHolder
                 .getContext()
                 .setAuthentication(authenticationManager.authenticate(tokenAuthentication));
