@@ -90,27 +90,4 @@ public class SecurityConfiguration   // extends WebSecurityConfigurerAdapter
                 .and()
                 .build();
     }
-
-    /*
-    // JDBC auth: not finished
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource)
-        throws Exception
-    {
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
-            .withDefaultSchema()
-            .usersByUsernameQuery(
-                "select email, password, 'true' from account where email=?")
-            .authoritiesByUsernameQuery(
-                "select email, role from account where email=?");
-*/
-         /*   .withUser(Account.withUsername("user")
-                             .password("password")
-                             .roles("USER"))
-            .withUser(Account.withUsername("admin")
-                             .password("password")
-                             .roles("ADMIN"));
-    }
-*/
 }
