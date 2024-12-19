@@ -1,18 +1,37 @@
-CREATE ROLE car_portal_app LOGIN;
+-- check if the role exists and create it if it does not
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'car_portal_app') THEN
+        CREATE ROLE car_portal_app LOGIN;
+    END IF;
+END
+$$;
 
+-- drop the database if it exists
 DROP DATABASE IF EXISTS car_portal;
 
---For linux
-CREATE DATABASE car_portal ENCODING 'UTF-8' LC_COLLATE 'en_US.UTF-8' LC_CTYPE 'en_US.UTF-8' TEMPLATE template0 OWNER car_portal_app;
+-- adjust the locale settings based on your operating system before running this script
+CREATE DATABASE car_portal
+    WITH
+    OWNER = car_portal_app
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'C.UTF-8'
+    LC_CTYPE = 'C.UTF-8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
 
--- For Windows:
--- CREATE DATABASE car_portal ENCODING 'UTF-8' LC_COLLATE 'English_United States' LC_CTYPE 'English_United States' TEMPLATE template0 OWNER car_portal_app;
-
+-- connect to the newly created database to continue setup
+-- Note: The \c command is specific to PSQL utility and may not work in all SQL execution environments.
+--   If running this script outside of PSQL, you should manually connect to the "car_portal" database
+--   before proceeding with the following commands.
 \c car_portal
 
-CREATE EXTENSION pgmemcache;
+-- pgmemcache package should be installed before this command;
+--    sudo apt install postgresql-14-pgmemcache (if you are using postgres 14)
+CREATE EXTENSION IF NOT EXISTS pgmemcache;
 
-CREATE SCHEMA car_portal_app AUTHORIZATION car_portal_app;
+CREATE SCHEMA IF NOT EXISTS car_portal_app AUTHORIZATION car_portal_app;
 
 SET search_path to car_portal_app;
 SET ROLE car_portal_app;
@@ -94,4 +113,3 @@ CREATE TABLE favorite_ads(
 	advertisement_id INT NOT NULL REFERENCES advertisement(advertisement_id),
 	primary key(account_id,advertisement_id)
 );
-

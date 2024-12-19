@@ -8,7 +8,7 @@
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		<property name="hibernate.connection.username">postgres</property>
 		<property name="hibernate.connection.password">1234</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5433/car_portal</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/car_portal</property>
 
 		<!-- Specifying the schema name here - in the Spring's Hibernate properties          -->
 		<!-- I've also tried to specify the schema name directly inside <hibernate-mapping>, -->

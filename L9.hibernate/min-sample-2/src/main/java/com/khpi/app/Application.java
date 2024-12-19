@@ -15,7 +15,7 @@ public class Application
     private static void configure_hibernate(Configuration cfg)
     {
         // DBMS connection setup
-        cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5433/car_portal");
+        cfg.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/car_portal");
         cfg.setProperty("hibernate.connection.username", "postgres");
         cfg.setProperty("hibernate.connection.password", "1234");
         cfg.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
@@ -68,7 +68,7 @@ public class Application
         //-------------------------------------------------------
 
         Account user = session.createQuery(
-            "from Account account where account.id = 485", Account.class).getSingleResult();
+            "from Account account where account.id = 1", Account.class).getSingleResult();
 
         System.out.println(user);
         for (Car car : user.getCars())
@@ -88,7 +88,7 @@ public class Application
                                 .build();
 
         System.out.println(account.toString());
-        // session.save(account);
+        //session.save(account);    // <== SAVE IN DB
         session.getTransaction().commit();
         System.out.println(account.toString());
 

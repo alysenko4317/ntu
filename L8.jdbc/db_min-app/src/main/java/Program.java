@@ -9,7 +9,7 @@ public class Program
     {
         final String userName = "postgres";
         final String userPass = "1234";
-        final String connURL = "jdbc:postgresql://localhost:5433/car_portal";
+        final String connURL = "jdbc:postgresql://localhost:5432/car_portal";
 
         Class.forName("org.postgresql.Driver");
 

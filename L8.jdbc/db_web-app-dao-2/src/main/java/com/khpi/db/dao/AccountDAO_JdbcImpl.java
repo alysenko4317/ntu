@@ -70,6 +70,10 @@ public class AccountDAO_JdbcImpl implements AccountDAO
         _loadOwnedCars = loadOwnedCars;
     }
 
+    // В данном примере используется лямбда-выражение для создания объекта, который соответствует
+    // функциональному интерфейсу RowMapper<Account>. Интерфейс RowMapper имеет один абстрактный метод:
+    //    T mapRow(ResultSet rs, int rowNum) throws SQLException;
+
     private RowMapper<Account> accountRowMapper = (ResultSet rs, int i) ->
     {
         // ПРОБЛЕМА:

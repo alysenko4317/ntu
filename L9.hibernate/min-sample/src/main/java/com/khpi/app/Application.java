@@ -10,7 +10,7 @@ public class Application
     {
         Configuration configuration = new Configuration();
 
-        configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5433/car_portal");
+        configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/car_portal");
         configuration.setProperty("hibernate.connection.username", "postgres");
         configuration.setProperty("hibernate.connection.password", "1234");
         configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
