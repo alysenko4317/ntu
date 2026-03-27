@@ -1,0 +1,168 @@
+package com.khpi.db.dao;
+
+//import com.khpi.db.models.Account;
+//import com.khpi.db.models.Car;
+//import com.khpi.db.models.CarModel;
+import com.example.generated.tables.Car;
+import com.example.generated.tables.CarModel;
+import com.example.generated.tables.Account;
+import com.example.generated.tables.CarAccountLink;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+
+import javax.sql.DataSource;
+import java.util.*;
+
+import static com.example.generated.tables.Car.CAR;
+import static com.example.generated.tables.CarModel.CAR_MODEL;
+import static com.example.generated.tables.Account.ACCOUNT;
+import static com.example.generated.tables.CarAccountLink.CAR_ACCOUNT_LINK;
+
+public class AccountDAO_JooqImpl implements AccountDAO {
+
+    private DSLContext _context;
+    private boolean _loadOwnedCars;
+    private Map<Integer, Account> _accounts = new HashMap<>();
+
+    public AccountDAO_JooqImpl(DataSource dataSource) {
+        this(dataSource, false);
+    }
+
+    public AccountDAO_JooqImpl(DataSource dataSource, boolean loadOwnedCars) {
+        this._context = DSL.using(dataSource, SQLDialect.POSTGRES); // Приклад використання PostgreSQL
+        this._loadOwnedCars = loadOwnedCars;
+    }
+
+    @Override
+    public List<com.khpi.db.models.Account> findAllByFirstName(String firstName) {
+
+        return null;
+    }
+
+    public List<Account> findAllByFirstName2(String firstName) {
+        if (_loadOwnedCars) {
+            return loadAccountsAndCars(firstName);
+        } else {
+            return loadAccounts(firstName);
+        }
+    }
+
+    private List<Account> loadAccounts(String firstName) {
+        Result<Record> result = _context.select(ACCOUNT.fields())
+                .select(DSL.count(CAR_ACCOUNT_LINK.ACCOUNT_ID).as("cars_owned_count"))
+                .from(ACCOUNT)
+                .leftJoin(CAR_ACCOUNT_LINK).on(ACCOUNT.ACCOUNT_ID.eq(CAR_ACCOUNT_LINK.ACCOUNT_ID))
+                .where(ACCOUNT.FIRST_NAME.eq(firstName))
+                .groupBy(ACCOUNT.ACCOUNT_ID)
+                .orderBy(ACCOUNT.FIRST_NAME)
+                .fetch();
+
+        // Тут мапінг результату, схожий на accountRowMapper з використанням JdbcTemplate
+        // ...
+
+        return new ArrayList<>(_accounts.values());
+    }
+
+    private List<Account> loadAccountsAndCars(String firstName) {
+        Result<Record> result = _context.select()
+                .from(ACCOUNT)
+                .leftJoin(CAR_ACCOUNT_LINK).on(ACCOUNT.ACCOUNT_ID.eq(CAR_ACCOUNT_LINK.ACCOUNT_ID))
+                .leftJoin(CAR).on(CAR_ACCOUNT_LINK.CAR_ID.eq(CAR.CAR_ID))
+                .leftJoin(CAR_MODEL).on(CAR.CAR_MODEL_ID.eq(CAR_MODEL.CAR_MODEL_ID))
+                .where(ACCOUNT.FIRST_NAME.eq(firstName))
+                .orderBy(ACCOUNT.FIRST_NAME)
+                .fetch();
+
+        // Мапінг результатів для випадку з завантаженням автомобілів
+        // ...
+
+        return new ArrayList<>(_accounts.values());
+    }
+
+    private void mapResultToAccounts(Result<Record> result) {
+        for (Record record : result) {
+            Integer id = record.get("account_id", Integer.class);
+            if (!_accounts.containsKey(id)) {
+                List<Car> cars = new ArrayList<>();
+
+                // Перевірка, чи потрібно завантажувати автомобілі
+                if ((_loadOwnedCars && record.get("car_id", Integer.class) != null)
+                        || (!_loadOwnedCars && record.get("cars_owned_count", Integer.class) > 0)) {
+                    cars = new ArrayList<>();
+                }
+
+                Account account = new Account(
+                        id,
+                        record.get("first_name", String.class),
+                        record.get("last_name", String.class),
+                        record.get("email", String.class),
+                        record.get("password", String.class),
+                        cars);
+                _accounts.put(id, account);
+            }
+
+            Account account = _accounts.get(id);
+
+            // Якщо ми завантажуємо автомобілі, створимо і додамо новий автомобіль до списку
+            if (account.getCars() != null && _loadOwnedCars && record.get("car_id", Integer.class) != null) {
+                Car car = new Car(
+                        record.get("car_id", Integer.class),
+                        account,
+                        new CarModel(
+                                record.get("car_model_id", Integer.class),
+                                record.get("make", String.class),
+                                record.get("model", String.class)),
+                        record.get("registration_number", String.class),
+                        record.get("manufacture_year", Integer.class),
+                        record.get("mileage", Integer.class));
+
+                account.getCars().add(car);
+            }
+        }
+    }
+
+    // language=SQL
+    private static final String SQL_SELECT_ALL_BY_FIRST_NAME_2 =
+            "SELECT a.*, COUNT(b.account_id) AS cars_owned_count FROM car_portal_app.account a " +
+                    "LEFT JOIN car_portal_app.car_account_link b ON a.account_id = b.account_id " +
+                    "WHERE a.first_name = ?" +
+                    "GROUP BY a.account_id, a.first_name " +
+                    "ORDER BY a.first_name ";
+
+    // language=SQL
+    private static final String SQL_SELECT_ALL_BY_FIRST_NAME_WITH_CARS =
+            "SELECT a.*, c.*, m.* FROM car_portal_app.account a " +
+                    "LEFT JOIN car_portal_app.car_account_link b ON a.account_id = b.account_id " +
+                    "LEFT JOIN car_portal_app.car c ON b.car_id = c.car_id " +
+                    "LEFT JOIN car_portal_app.car_model m ON c.car_model_id = m.car_model_id " +
+                    "WHERE a.first_name = ?" +
+                    "ORDER BY a.first_name";
+
+    @Override
+    public Optional<Account> find(Integer id) {
+        return null;
+    }
+
+    @Override
+    public void save(Account model) {
+
+    }
+
+    @Override
+    public void update(Account model) {
+    }
+
+    @Override
+    public void delete(Integer id) {
+    }
+
+    @Override
+    public List<Account> fetchAll()
+    {
+        return new ArrayList<Account>();
+    }
+
+}

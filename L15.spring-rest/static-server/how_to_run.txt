@@ -1,0 +1,12 @@
+Install Node.js Platform
+
+cd <this folder>
+npm init (just press enter to leave all by default)
+
+npm install express
+npm install cookie-parser
+
+node server.js
+--------------------------
+use login/pass to login and then users list will be displayed
+for my example the login/pass is aaa/aaa (depends on data in Database)

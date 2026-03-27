@@ -1,0 +1,40 @@
+корисно згенерувати порожній проект за допомогою maven:
+
+mvn archetype:generate \
+  -DgroupId=com.mycompany.app \
+  -DartifactId=my-app \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.4 \
+  -DinteractiveMode=false
+
+щоб мати можливість переглянути, що буде створено в pom.xml за замовчуванням;
+наприклад, дивись: colored_terminal_generated
+
+при збірці проекту servapp, де pom.xml був створений IntelliJ, оскільки maven-проект
+створювався з wizard-а, я зіткнувся з проблемою - при виконанні mvn package з'являлася
+помилка:
+(Maven project created via wizard), I encountered a problem - running mvn package produced the error:
+знову допоміг всезнаючий stackoverflow:
+
+Again Stack Overflow came to the rescue:
+суть відповіді - підправити pom.xml:
+
+The solution is to update pom.xml:
+
+Change the version of the war plugin in your pom.xml and add maven-compiler-plugin
+according to your jdk version.
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-war-plugin</artifactId>
+    <version>3.3.1</version>
+</plugin>
+<plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.8.1</version>
+</plugin>
+
+і знову такі рядки є в pom.xml проекту, який згенерував maven
+тому я їх скопіював звідти і все зібралося успішно.
+

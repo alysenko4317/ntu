@@ -1,0 +1,29 @@
+корисно згенерувати порожній проект за допомогою maven:
+
+mvn archetype:generate \
+  -DgroupId=com.mycompany.app \
+  -DartifactId=my-app \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.4 \
+  -DinteractiveMode=false
+
+щоб мати можливість переглянути, що буде створено в pom.xml за замовчуванням
+дивись colored_terminal_generated
+
+наприклад, при збірці проекту colored_terminal, де pom.xml створений вручну, я
+зіткнувся з проблемою - при виконанні mvn compile з'являлася помилка:
+   Error "Source option 5 is no longer supported.
+   Use 7 or later" on Maven compile
+
+пошукавши в інтернеті, знайшов таку відповідь:
+   https://stackoverflow.com/questions/53034953/error-source-option-5-is-no-longer-supported-use-6-or-later-on-maven-compile
+
+суть відповіді - помістити в pom.xml рядки наступного вигляду:
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+такі рядки є в pom.xml проекту, який згенерував maven
+
